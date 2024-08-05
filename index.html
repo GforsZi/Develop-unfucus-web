@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unfocus web</title>
+  </head>
+  <body>
+    <h1>Website ini dibuat hanya untuk pembelajaran</h1>
+  </body>
+  <script>
+    let unfocus = localStorage.getItem("unfocus")
+      ? parseInt(localStorage.getItem("unfocus"))
+      : 0;
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") {
+        unfocus++;
+        localStorage.setItem("unfocus", unfocus);
+        console.log(unfocus);
+      }
+    });
+
+    document.addEventListener("blur", function () {
+      unfocus++;
+    });
+
+    window.addEventListener("beforeunload", function (event) {
+      if (unfocus > 0) {
+        unfocus--;
+      }
+      console.log(unfocus);
+      localStorage.setItem("unfocus", unfocus);
+    });
+
+    let h2 = document.createElement("h2");
+    h2.innerHTML = "unfocus: " + unfocus;
+    let body = document.body;
+    body.append(h2);
+  </script>
+</html>
